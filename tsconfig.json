@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ESNext",
+    "module": "Node16",
+    "lib": ["esnext"],
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node16",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "rootDirs": ["./src", "./client.bak"],
+    "paths": {
+      "lib/*": ["./src/lib/*"],
+      "modules/*": ["./src/modules/*"]
+    }
+  },
+  "exclude": ["dist", "node_modules"]
+}
