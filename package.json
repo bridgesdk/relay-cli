@@ -20,6 +20,10 @@
     "node_modules/"
   ],
   "bin": "./dist/client.js",
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
   "scripts": {
     "start": "yarn ts-node -r tsconfig-paths/register ./src/main.ts",
     "test": "yarn jest --config=jest.config.json --pathPattern=src",
