@@ -44,17 +44,17 @@ export const getAppConfig = () => {
     const defaultKeys = Object.keys(DEFAULT_CONFIG)
 
     // eslint-disable-next-line functional/no-let
-    let hasNotIncludedChanges = false
+    let containsNotIncludedChanges = false
     // eslint-disable-next-line no-loops/no-loops
     for (const key of Object.keys(json)) {
         if (!defaultKeys.includes(key)) {
             // eslint-disable-next-line functional/immutable-data
             delete json[key]
-            hasNotIncludedChanges = true
+            containsNotIncludedChanges = true
         }
     }
 
-    if (hasNotIncludedChanges || !defaultKeys.every(key => Object.keys(json).includes(key))) {
+    if (containsNotIncludedChanges || !defaultKeys.every(key => Object.keys(json).includes(key))) {
         const correctedConfig = { ...DEFAULT_CONFIG, ...json }
         // eslint-disable-next-line functional/immutable-data
         Object.assign(json, correctedConfig)
