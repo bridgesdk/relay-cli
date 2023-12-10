@@ -2,6 +2,8 @@ import path from 'node:path'
 import os from 'node:os'
 import process from 'node:process'
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
+import { DEFAULT_CONFIG } from './constants'
+import { AppConfig } from './types'
 
 const homedir = os.homedir()
 
@@ -30,22 +32,16 @@ const getPlatformPaths = (name: string) => {
     return getLinuxConfigPath(name)
 }
 
-const defaultConfig = {
-    accessToken: null as string | null
-}
-
-export type AppConfig = typeof defaultConfig
-
 export const getAppConfig = () => {
     const { config } = getPlatformPaths('relay-cli')
 
     if (!existsSync(config)) {
-        writeFileSync(config, JSON.stringify(defaultConfig, null, 2))
+        writeFileSync(config, JSON.stringify(DEFAULT_CONFIG, null, 2))
     }
 
     const data = readFileSync(config, { encoding: 'utf-8' })
     const json = JSON.parse(data)
-    const defaultKeys = Object.keys(defaultConfig)
+    const defaultKeys = Object.keys(DEFAULT_CONFIG)
 
     // eslint-disable-next-line functional/no-let
     let hasNotIncludedChanges = false
@@ -59,7 +55,7 @@ export const getAppConfig = () => {
     }
 
     if (hasNotIncludedChanges || !defaultKeys.every(key => Object.keys(json).includes(key))) {
-        const correctedConfig = { ...defaultConfig, ...json }
+        const correctedConfig = { ...DEFAULT_CONFIG, ...json }
         // eslint-disable-next-line functional/immutable-data
         Object.assign(json, correctedConfig)
         writeFileSync(config, JSON.stringify(correctedConfig, null, 2))
