@@ -1,39 +1,11 @@
 import path from 'node:path'
-import os from 'node:os'
-import process from 'node:process'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { DEFAULT_CONFIG } from './constants'
 import { DefaultConfig } from './types'
-
-const homedir = os.homedir()
-
-const getMacosConfigPath = (name: string) => ({
-    config: path.join(path.join(homedir, 'Library'), 'Preferences', name)
-})
-
-const getWindowsConfigPath = (name: string) => ({
-    config: path.join(process.env.APPDATA || path.join(homedir, 'AppData', 'Roaming'), name, 'config')
-})
-
-// https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
-const getLinuxConfigPath = (name: string) => ({
-    config: path.join(process.env.XDG_CONFIG_HOME || path.join(homedir, '.config'), name)
-})
-
-const getPlatformPaths = (name: string) => {
-    if (process.platform === 'darwin') {
-        return getMacosConfigPath(name)
-    }
-
-    if (process.platform === 'win32') {
-        return getWindowsConfigPath(name)
-    }
-
-    return getLinuxConfigPath(name)
-}
+import { getPlatformPaths } from './utils'
 
 export const getAppConfig = () => {
-    const { config } = getPlatformPaths('relay-cli')
+    const { config } = getPlatformPaths()
 
     if (!existsSync(config)) {
         mkdirSync(path.dirname(config), { recursive: true })
@@ -69,6 +41,12 @@ export const getAppConfig = () => {
             const data = Object.assign(json, {
                 [key]: value
             })
+
+            writeFileSync(config, JSON.stringify(data, null, 2))
+        },
+        setMany: (values: { [Key in keyof DefaultConfig]?: DefaultConfig[Key] }) => {
+            // eslint-disable-next-line functional/immutable-data
+            const data = Object.assign(json, values)
 
             writeFileSync(config, JSON.stringify(data, null, 2))
         }
