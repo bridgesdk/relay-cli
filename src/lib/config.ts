@@ -1,9 +1,9 @@
 import path from 'node:path'
 import os from 'node:os'
 import process from 'node:process'
-import { existsSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { DEFAULT_CONFIG } from './constants'
-import { AppConfig } from './types'
+import { DefaultConfig } from './types'
 
 const homedir = os.homedir()
 
@@ -36,6 +36,7 @@ export const getAppConfig = () => {
     const { config } = getPlatformPaths('relay-cli')
 
     if (!existsSync(config)) {
+        mkdirSync(path.dirname(config), { recursive: true })
         writeFileSync(config, JSON.stringify(DEFAULT_CONFIG, null, 2))
     }
 
@@ -62,8 +63,8 @@ export const getAppConfig = () => {
     }
 
     return {
-        data: json as AppConfig,
-        set: <TKey extends keyof AppConfig>(key: TKey, value: AppConfig[TKey]) => {
+        data: json as DefaultConfig,
+        set: <TKey extends keyof DefaultConfig>(key: TKey, value: DefaultConfig[TKey]) => {
             // eslint-disable-next-line functional/immutable-data
             const data = Object.assign(json, {
                 [key]: value
