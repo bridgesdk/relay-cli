@@ -56,7 +56,7 @@ __metadata:
     "@commitlint/config-conventional": "npm:18.4.3"
     "@types/express": "npm:4.17.21"
     "@types/jsonwebtoken": "npm:^9"
-    "@types/node": "npm:20.10.0"
+    "@types/node": "npm:20.11.24"
     "@typescript-eslint/eslint-plugin": "npm:6.13.1"
     "@typescript-eslint/eslint-plugin-tslint": "npm:6.13.1"
     "@typescript-eslint/parser": "npm:6.13.1"
@@ -415,12 +415,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.10.0":
-  version: 20.10.0
-  resolution: "@types/node@npm:20.10.0"
+"@types/node@npm:20.11.24":
+  version: 20.11.24
+  resolution: "@types/node@npm:20.11.24"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: f379e57d9d28cb5f3d8eab943de0c54a0ca2f95ee356e1fe2a1a4fa718b740103ae522c50ce107cffd52c3642ef3244cfc55bf5369081dd6c48369c8587b21ae
+  checksum: 5a62225eb4797b41e6953f9c08c4611d607b5422ddd153312fc81ed6ed37115228ae27e3e3caa1a3bf52d88310306a196ba1cfbd8b2ec918a20f64d80dfa22c9
   languageName: node
   linkType: hard
 
